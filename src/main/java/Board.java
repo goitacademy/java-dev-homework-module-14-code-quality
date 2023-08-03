@@ -51,16 +51,16 @@ class Board {
     }
 
     public void printBoard() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 9; i += 3) {
-            sb.append(String.format(" %c | %c | %c ", cells[i], cells[i + 1], cells[i + 2]));
-            if (i < 6) {
-                sb.append(System.lineSeparator())
-                        .append("---+---+---")
-                        .append(System.lineSeparator());
-            }
-        }
-        String currentBoard = sb.toString();
+        String currentBoard = String.format("""
+                %s | %s | %s
+                ---+----+---
+                %s | %s | %s
+                ---+----+---
+                %s | %s | %s"""
+                ,cells[0],cells[1],cells[2]
+                ,cells[3],cells[4],cells[5]
+                ,cells[6],cells[7],cells[8]
+        );
         logger.info(currentBoard);
     }
 
