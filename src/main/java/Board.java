@@ -13,7 +13,7 @@ class Board {
             {0, 4, 8}, {2, 4, 6} // Diagonals
     };
 
-    public char[] cells;
+    private final char[] cells;
     private int winner;
     private final Logger logger;
 
@@ -51,13 +51,17 @@ class Board {
     }
 
     public void printBoard() {
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 9; i += 3) {
-            logger.info(" " + cells[i] + " | " + cells[i + 1] + " | " + cells[i + 2] + " ");
+            sb.append(String.format(" %c | %c | %c ", cells[i], cells[i + 1], cells[i + 2]));
             if (i < 6) {
-                logger.info("-----------");
+                sb.append(System.lineSeparator())
+                        .append("---+---+---")
+                        .append(System.lineSeparator());
             }
         }
-        logger.info("");
+        String currentBoard = sb.toString();
+        logger.info(currentBoard);
     }
 
     public int getPlayerInput() {
