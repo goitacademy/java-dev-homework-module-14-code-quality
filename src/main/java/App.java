@@ -7,9 +7,9 @@ public class App {
         byte input;
         byte rand;
         byte i;
-        boolean boxAvailable = false;
+        boolean boxAvailable;
         byte winner = 0;
-        char box[] = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+        char[] box = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
         System.out.println("Enter box number to select. Enjoy!\n");
 
         boolean boxEmpty = false;
@@ -65,7 +65,7 @@ public class App {
                 }
             }
 
-            if(boxAvailable == false){
+            if(!boxAvailable){
                 winner = 3;
                 continue;
             }
@@ -82,7 +82,6 @@ public class App {
                (box[0]=='O' && box[3]=='O' && box[6]=='O') || (box[1]=='O' && box[4]=='O' && box[7]=='O') || (box[2]=='O' && box[5]=='O' && box[8]=='O') ||
                (box[0]=='O' && box[4]=='O' && box[8]=='O') || (box[2]=='O' && box[4]=='O' && box[6]=='O')){
                 winner = 2;
-                continue;
             }
         }
 
