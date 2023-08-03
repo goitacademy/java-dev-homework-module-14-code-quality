@@ -20,7 +20,6 @@ public class LoggerConfig {
                 return message.getMessage() + "\n";
             }
         });
-
         logger.addHandler(handler);
     }
 }

@@ -4,6 +4,10 @@ public class BoardChecker {
     private static final char PLAYER_SYMBOL = 'X';
     private static final char COMPUTER_SYMBOL = 'O';
 
+    private BoardChecker() {
+        throw new AssertionError("Utility class, should not be instantiated.");
+    }
+
     public static boolean isBoardFull(char[] board) {
         for (char box : board) {
             if (box != PLAYER_SYMBOL && box != COMPUTER_SYMBOL) {
