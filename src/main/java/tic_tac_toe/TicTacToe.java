@@ -1,11 +1,13 @@
 package tic_tac_toe;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class TicTacToe {
     private static final char PLAYER_SYMBOL = 'X';
     private static final char COMPUTER_SYMBOL = 'O';
     private static final int BOARD_SIZE = 9;
+    private static final Logger logger = Logger.getLogger(TicTacToe.class.getName());
     private final Scanner scanner;
     private final char[] board;
     private byte winner;
@@ -24,80 +26,51 @@ public class TicTacToe {
     }
 
     public void playGame() {
-        System.out.println("Enter box number to select. Enjoy!\n");
-        displayBoard();
+        logger.info("Enter box number to select. Enjoy!\n");
+        BoardDisplay.displayBoard(board);
 
         while (winner == 0) {
-            if (isBoardFull()) {
+            if (BoardChecker.isBoardFull(board)) {
                 winner = 3;
             } else {
                 playerMove();
-                if (checkWin(PLAYER_SYMBOL)) {
+                if (BoardChecker.checkWin(board, PLAYER_SYMBOL)) {
                     winner = 1;
                 } else {
                     computerMove();
-                    if (checkWin(COMPUTER_SYMBOL)) {
+                    if (BoardChecker.checkWin(board, COMPUTER_SYMBOL)) {
                         winner = 2;
                     }
                 }
             }
-            displayBoard();
+            BoardDisplay.displayBoard(board);
         }
 
         printResult();
-    }
-
-    private void displayBoard() {
-        System.out.println("\n\n " + board[0] + " | " + board[1] + " | " + board[2] + " ");
-        System.out.println("-----------");
-        System.out.println(" " + board[3] + " | " + board[4] + " | " + board[5] + " ");
-        System.out.println("-----------");
-        System.out.println(" " + board[6] + " | " + board[7] + " | " + board[8] + " \n");
+        scanner.close();
     }
 
     private void playerMove() {
+        if (winner != 0) {
+            return;
+        }
+
         while (true) {
             byte input = scanner.nextByte();
             if (input >= 1 && input <= BOARD_SIZE && board[input - 1] != PLAYER_SYMBOL && board[input - 1] != COMPUTER_SYMBOL) {
                 board[input - 1] = PLAYER_SYMBOL;
                 break;
             } else {
-                System.out.println("Invalid input. Enter again.");
+                logger.info("Invalid input. Enter again.");
             }
         }
-    }
-
-    private boolean isBoardFull() {
-        for (char box : board) {
-            if (box != PLAYER_SYMBOL && box != COMPUTER_SYMBOL) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean checkWin(char symbol) {
-        return checkRows(symbol) || checkColumns(symbol) || checkDiagonals(symbol);
-    }
-
-    private boolean checkRows(char symbol) {
-        return (board[0] == symbol && board[1] == symbol && board[2] == symbol)
-                || (board[3] == symbol && board[4] == symbol && board[5] == symbol)
-                || (board[6] == symbol && board[7] == symbol && board[8] == symbol);
-    }
-
-    private boolean checkColumns(char symbol) {
-        return (board[0] == symbol && board[3] == symbol && board[6] == symbol)
-                || (board[1] == symbol && board[4] == symbol && board[7] == symbol)
-                || (board[2] == symbol && board[5] == symbol && board[8] == symbol);
-    }
-
-    private boolean checkDiagonals(char symbol) {
-        return (board[0] == symbol && board[4] == symbol && board[8] == symbol)
-                || (board[2] == symbol && board[4] == symbol && board[6] == symbol);
     }
 
     private void computerMove() {
+        if (winner != 0) {
+            return;
+        }
+
         byte rand;
         while (true) {
             rand = (byte) (Math.random() * BOARD_SIZE);
@@ -110,11 +83,11 @@ public class TicTacToe {
 
     private void printResult() {
         if (winner == 1) {
-            System.out.println("You won the game!\nThanks for playing!");
+            logger.info("You won the game!\nThanks for playing!");
         } else if (winner == 2) {
-            System.out.println("You lost the game!\nThanks for playing!");
+            logger.info("You lost the game!\nThanks for playing!");
         } else if (winner == 3) {
-            System.out.println("It's a draw!\nThanks for playing!");
+            logger.info("It's a draw!\nThanks for playing!");
         }
     }
 }
