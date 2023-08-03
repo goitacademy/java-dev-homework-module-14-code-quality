@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 class Board {
     private static final char PLAYER_X = 'X';
@@ -14,11 +15,14 @@ class Board {
 
     public char[] cells;
     private int winner;
+    private final Logger logger;
 
-    public Board() {
+    public Board(Logger logger) {
         cells = new char[]{'1', '2', '3', '4', '5', '6', '7', '8', '9'};
         winner = 0;
+        this.logger = logger;
     }
+
 
     public void play() {
         while (winner == 0) {
@@ -33,27 +37,27 @@ class Board {
                     winner = checkWinner(PLAYER_O);
                 }
             } else {
-                System.out.println("Invalid input. Enter again.");
+                logger.warning("Invalid input. Enter again.");
             }
         }
-
         if (winner == 1) {
-            System.out.println("You won the game!");
+            logger.info("You won the game!");
         } else if (winner == 2) {
-            System.out.println("You lost the game!");
+            logger.info("You lost the game!");
         } else if (winner == DRAW) {
-            System.out.println("It's a draw!");
+            logger.info("It's a draw!");
         }
+        printBoard();
     }
 
     public void printBoard() {
         for (int i = 0; i < 9; i += 3) {
-            System.out.println(" " + cells[i] + " | " + cells[i + 1] + " | " + cells[i + 2] + " ");
+            logger.info(" " + cells[i] + " | " + cells[i + 1] + " | " + cells[i + 2] + " ");
             if (i < 6) {
-                System.out.println("-----------");
+                logger.info("-----------");
             }
         }
-        System.out.println();
+        logger.info("");
     }
 
     public int getPlayerInput() {
