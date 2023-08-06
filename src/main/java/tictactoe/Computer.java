@@ -2,28 +2,31 @@ package tictactoe;
 
 import java.util.Random;
 
-public class Computer {
-    private char symbol;
-    private Random random;
-    private int boardSide = 9;
 
-    public Computer(char symbol) {
+class Computer {
+    private final char symbol;
+    private final Random random;
+    private static final int BOARD_SIDE = 9;
+
+    Computer(char symbol) {
         this.symbol = symbol;
         this.random = new Random();
     }
 
-    public char getSymbol() {
+    char getSymbol() {
         return symbol;
     }
 
-    public int getComputerMove(GameBoard gameBoard) {
+    int getComputerMove(final GameBoard gameBoard) {
         int rand;
-        while (true) {
-            rand = random.nextInt(boardSide) + 1;
+        while (!gameBoard.isBoardFull()) {
+            rand = random.nextInt(BOARD_SIDE) + 1;
             if (gameBoard.isBoxEmpty(rand)) {
                 return rand;
             }
         }
+        return GameBoard.DRAW;
     }
 }
+
 

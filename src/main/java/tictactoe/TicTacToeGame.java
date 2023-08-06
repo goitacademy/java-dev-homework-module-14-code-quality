@@ -14,7 +14,7 @@ public class TicTacToeGame {
     }
 
     public static void playGame(GameBoard gameBoard, Player player, Computer computer) {
-        byte winner = 0;
+        byte winner;
         boolean boxEmpty = false;
 
         while (true) {
@@ -38,7 +38,8 @@ public class TicTacToeGame {
             int computerMove = computer.getComputerMove(gameBoard);
             gameBoard.makeMove(computerMove, computer.getSymbol());
 
-            player.closeScanner();
+
         }
+        player.closeScanner();
     }
 }
