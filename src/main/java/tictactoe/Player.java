@@ -37,4 +37,8 @@ public class Player {
             }
         }
     }
+
+    public void closeScanner() {
+        scanner.close();
+    }
 }
