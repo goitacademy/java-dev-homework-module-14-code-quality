@@ -2,6 +2,7 @@ package ua.mani123;
 
 import org.slf4j.Logger;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Game {
@@ -85,21 +86,27 @@ public class Game {
     }
 
     public void clearPanel() {
-        for (byte i = 0; i < 9; i++)
+        for (byte i = 0; i < 9; i++) {
             box[i] = ' ';
+        }
     }
 
     public void playerTurn() {
         while (true) {
-            byte input = scan.nextByte();
-            if (input > 0 && input < 10) {
-                if (box[input - 1] == 'X' || box[input - 1] == 'O')
-                    logger.error("That one is already in use. Enter another.");
-                else {
-                    box[input - 1] = 'X';
-                    return;
-                }
-            } else logger.error("Invalid input. Enter again.");
+            try {
+                byte input = scan.nextByte();
+                if (input > 0 && input < 10) {
+                    if (box[input - 1] == 'X' || box[input - 1] == 'O')
+                        logger.error("That one is already in use. Enter another.");
+                    else {
+                        box[input - 1] = 'X';
+                        return;
+                    }
+                } else logger.error("Invalid input. Enter again.");
+            } catch (NoSuchElementException | IllegalStateException e) {
+                logger.error(e.getMessage(), e);
+                playerTurn();
+            }
         }
     }
 
