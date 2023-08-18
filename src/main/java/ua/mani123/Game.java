@@ -7,10 +7,9 @@ import java.util.Scanner;
 
 public class Game {
 
-    Logger logger;
-
-    Scanner scan = new Scanner(System.in);
-    char[] box = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    private final Logger logger;
+    private final Scanner scan = new Scanner(System.in);
+    private final char[] box = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
     public Game(Logger logger) {
         this.logger = logger;
@@ -102,7 +101,9 @@ public class Game {
                         box[input - 1] = 'X';
                         return;
                     }
-                } else logger.error("Invalid input. Enter again.");
+                } else {
+                    logger.error("Invalid input. Enter again.");
+                }
             } catch (NoSuchElementException | IllegalStateException e) {
                 logger.error(e.getMessage(), e);
                 playerTurn();
